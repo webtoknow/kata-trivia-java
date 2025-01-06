@@ -170,6 +170,6 @@ public class Game implements IGame {
 
 
    private boolean didPlayerWin() {
-      return !(purses[currentPlayer] == WINNING_COINS);
+      return purses[currentPlayer] != WINNING_COINS;
    }
 }
