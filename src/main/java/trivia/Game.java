@@ -73,8 +73,8 @@ public class Game implements IGame {
             out.println(players.get(currentPlayer)
                                + "'s new location is "
                                + places[currentPlayer]);
-            out.println("The category is " + currentCategory());
-            askQuestion();
+            out.println("The category is " + currentCategory(places[currentPlayer]));
+            askQuestion(places[currentPlayer]);
          } else {
             out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
             isGettingOutOfPenaltyBox = false;
@@ -88,35 +88,30 @@ public class Game implements IGame {
          out.println(players.get(currentPlayer)
                             + "'s new location is "
                             + places[currentPlayer]);
-         out.println("The category is " + currentCategory());
-         askQuestion();
+         out.println("The category is " + currentCategory(places[currentPlayer]));
+         askQuestion(places[currentPlayer]);
       }
 
    }
 
-   private void askQuestion() {
-      if (currentCategory().equals(POP))
-         out.println(popQuestions.removeFirst());
-      if (currentCategory().equals(SCIENCE))
-         out.println(scienceQuestions.removeFirst());
-      if (currentCategory().equals(SPORTS))
-         out.println(sportsQuestions.removeFirst());
-      if (currentCategory().equals(ROCK))
-         out.println(rockQuestions.removeFirst());
+   private void askQuestion(int place) {
+      switch (currentCategory(place)) {
+         case POP -> out.println(popQuestions.removeFirst());
+         case SCIENCE -> out.println(scienceQuestions.removeFirst());
+         case SPORTS -> out.println(sportsQuestions.removeFirst());
+         case ROCK -> out.println(rockQuestions.removeFirst());
+          default -> throw new IllegalStateException("Unexpected value: " + currentCategory(place));
+      }
    }
 
 
-   private String currentCategory() {
-      if (places[currentPlayer] == 0) return POP;
-      if (places[currentPlayer] == 4) return POP;
-      if (places[currentPlayer] == 8) return POP;
-      if (places[currentPlayer] == 1) return SCIENCE;
-      if (places[currentPlayer] == 5) return SCIENCE;
-      if (places[currentPlayer] == 9) return SCIENCE;
-      if (places[currentPlayer] == 2) return SPORTS;
-      if (places[currentPlayer] == 6) return SPORTS;
-      if (places[currentPlayer] == 10) return SPORTS;
-      return ROCK;
+   private String currentCategory(int place) {
+      return switch (place % 4) {
+         case 0 -> POP;
+         case 1 -> SCIENCE;
+         case 2 -> SPORTS;
+         default -> ROCK;
+      };
    }
 
    public boolean wasCorrectlyAnswered() {
