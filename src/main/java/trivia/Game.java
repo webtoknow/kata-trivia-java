@@ -19,7 +19,7 @@ public class Game implements IGame {
 
    ArrayList<String> players = new ArrayList<>();
    int[] places = new int[MAX_PLAYERS];
-   int[] purses = new int[MAX_PLAYERS];
+   int[] coins = new int[MAX_PLAYERS];
    boolean[] inPenaltyBox = new boolean[MAX_PLAYERS];
 
    LinkedList<String> popQuestions = new LinkedList<>();
@@ -46,7 +46,7 @@ public class Game implements IGame {
    public boolean add(String playerName) {
       players.add(playerName);
       places[howManyPlayers()] = 0;
-      purses[howManyPlayers()] = 0;
+      coins[howManyPlayers()] = 0;
       inPenaltyBox[howManyPlayers()] = false;
 
       out.println(playerName + " was added");
@@ -123,10 +123,10 @@ public class Game implements IGame {
       if (inPenaltyBox[currentPlayer]) {
          if (isGettingOutOfPenaltyBox) {
             out.println("Answer was correct!!!!");
-            purses[currentPlayer]++;
+            coins[currentPlayer]++;
             out.println(players.get(currentPlayer)
                                + " now has "
-                               + purses[currentPlayer]
+                               + coins[currentPlayer]
                                + " Gold Coins.");
 
             boolean winner = didPlayerWin();
@@ -144,10 +144,10 @@ public class Game implements IGame {
       } else {
 
          out.println("Answer was corrent!!!!");
-         purses[currentPlayer]++;
+         coins[currentPlayer]++;
          out.println(players.get(currentPlayer)
                             + " now has "
-                            + purses[currentPlayer]
+                            + coins[currentPlayer]
                             + " Gold Coins.");
 
          boolean winner = didPlayerWin();
@@ -170,6 +170,6 @@ public class Game implements IGame {
 
 
    private boolean didPlayerWin() {
-      return purses[currentPlayer] != WINNING_COINS;
+      return coins[currentPlayer] != WINNING_COINS;
    }
 }
