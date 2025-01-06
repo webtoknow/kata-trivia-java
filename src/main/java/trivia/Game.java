@@ -12,10 +12,14 @@ public class Game implements IGame {
    public static final int MAX_PLAYERS = 6;
    public static final int WINNING_COINS = 6;
 
-   public static final String POP = "Pop";
-   public static final String SCIENCE = "Science";
-   public static final String SPORTS = "Sports";
-   public static final String ROCK = "Rock";
+   public enum Category {
+      POP, SCIENCE, SPORTS, ROCK;
+
+      @Override
+        public String toString() {
+             return name().charAt(0) + name().substring(1).toLowerCase();
+        }
+   }
 
    ArrayList<String> players = new ArrayList<>();
    int[] places = new int[MAX_PLAYERS];
@@ -31,16 +35,20 @@ public class Game implements IGame {
    boolean isGettingOutOfPenaltyBox;
 
    public Game() {
+      populateQuestions();
+   }
+
+   private void populateQuestions() {
       for (int i = 0; i < QUESTION_COUNT; i++) {
-         popQuestions.addLast("Pop Question " + i);
-         scienceQuestions.addLast(("Science Question " + i));
-         sportsQuestions.addLast(("Sports Question " + i));
-         rockQuestions.addLast(createRockQuestion(i));
+         popQuestions.addLast(createQuestion(i, Category.POP));
+         scienceQuestions.addLast(createQuestion(i, Category.SCIENCE));
+         sportsQuestions.addLast(createQuestion(i, Category.SPORTS));
+         rockQuestions.addLast(createQuestion(i, Category.ROCK));
       }
    }
 
-   public String createRockQuestion(int index) {
-      return "Rock Question " + index;
+   public String createQuestion(int index, Category category) {
+      return category + " Question " + index;
    }
 
    public boolean add(String playerName) {
@@ -105,12 +113,12 @@ public class Game implements IGame {
    }
 
 
-   private String currentCategory(int place) {
+   private Category currentCategory(int place) {
       return switch (place % 4) {
-         case 0 -> POP;
-         case 1 -> SCIENCE;
-         case 2 -> SPORTS;
-         default -> ROCK;
+         case 0 -> Category.POP;
+         case 1 -> Category.SCIENCE;
+         case 2 -> Category.SPORTS;
+         default -> Category.ROCK;
       };
    }
 
