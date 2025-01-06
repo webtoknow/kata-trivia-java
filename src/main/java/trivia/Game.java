@@ -7,10 +7,20 @@ import static java.lang.System.out;
 
 // REFACTOR ME
 public class Game implements IGame {
+   public static final int QUESTION_COUNT = 50;
+   public static final int BOARD_SIZE = 12;
+   public static final int MAX_PLAYERS = 6;
+   public static final int WINNING_COINS = 6;
+
+   public static final String POP = "Pop";
+   public static final String SCIENCE = "Science";
+   public static final String SPORTS = "Sports";
+   public static final String ROCK = "Rock";
+
    ArrayList<String> players = new ArrayList<>();
-   int[] places = new int[6];
-   int[] purses = new int[6];
-   boolean[] inPenaltyBox = new boolean[6];
+   int[] places = new int[MAX_PLAYERS];
+   int[] purses = new int[MAX_PLAYERS];
+   boolean[] inPenaltyBox = new boolean[MAX_PLAYERS];
 
    LinkedList<String> popQuestions = new LinkedList<>();
    LinkedList<String> scienceQuestions = new LinkedList<>();
@@ -21,7 +31,7 @@ public class Game implements IGame {
    boolean isGettingOutOfPenaltyBox;
 
    public Game() {
-      for (int i = 0; i < 50; i++) {
+      for (int i = 0; i < QUESTION_COUNT; i++) {
          popQuestions.addLast("Pop Question " + i);
          scienceQuestions.addLast(("Science Question " + i));
          sportsQuestions.addLast(("Sports Question " + i));
@@ -58,7 +68,7 @@ public class Game implements IGame {
 
             out.println(players.get(currentPlayer) + " is getting out of the penalty box");
             places[currentPlayer] = places[currentPlayer] + roll;
-            if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+            if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - BOARD_SIZE;
 
             out.println(players.get(currentPlayer)
                                + "'s new location is "
@@ -73,7 +83,7 @@ public class Game implements IGame {
       } else {
 
          places[currentPlayer] = places[currentPlayer] + roll;
-         if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+         if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - BOARD_SIZE;
 
          out.println(players.get(currentPlayer)
                             + "'s new location is "
@@ -85,28 +95,28 @@ public class Game implements IGame {
    }
 
    private void askQuestion() {
-      if (currentCategory() == "Pop")
+      if (currentCategory().equals(POP))
          out.println(popQuestions.removeFirst());
-      if (currentCategory() == "Science")
+      if (currentCategory().equals(SCIENCE))
          out.println(scienceQuestions.removeFirst());
-      if (currentCategory() == "Sports")
+      if (currentCategory().equals(SPORTS))
          out.println(sportsQuestions.removeFirst());
-      if (currentCategory() == "Rock")
+      if (currentCategory().equals(ROCK))
          out.println(rockQuestions.removeFirst());
    }
 
 
    private String currentCategory() {
-      if (places[currentPlayer] == 0) return "Pop";
-      if (places[currentPlayer] == 4) return "Pop";
-      if (places[currentPlayer] == 8) return "Pop";
-      if (places[currentPlayer] == 1) return "Science";
-      if (places[currentPlayer] == 5) return "Science";
-      if (places[currentPlayer] == 9) return "Science";
-      if (places[currentPlayer] == 2) return "Sports";
-      if (places[currentPlayer] == 6) return "Sports";
-      if (places[currentPlayer] == 10) return "Sports";
-      return "Rock";
+      if (places[currentPlayer] == 0) return POP;
+      if (places[currentPlayer] == 4) return POP;
+      if (places[currentPlayer] == 8) return POP;
+      if (places[currentPlayer] == 1) return SCIENCE;
+      if (places[currentPlayer] == 5) return SCIENCE;
+      if (places[currentPlayer] == 9) return SCIENCE;
+      if (places[currentPlayer] == 2) return SPORTS;
+      if (places[currentPlayer] == 6) return SPORTS;
+      if (places[currentPlayer] == 10) return SPORTS;
+      return ROCK;
    }
 
    public boolean wasCorrectlyAnswered() {
@@ -160,6 +170,6 @@ public class Game implements IGame {
 
 
    private boolean didPlayerWin() {
-      return !(purses[currentPlayer] == 6);
+      return !(purses[currentPlayer] == WINNING_COINS);
    }
 }
