@@ -44,31 +44,31 @@ public class Game implements IGame {
             isGettingOutOfPenaltyBox = true;
 
             out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-            places[currentPlayer] = places[currentPlayer] + roll;
-            if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - BOARD_SIZE;
-
-            out.println(players.get(currentPlayer)
-                               + "'s new location is "
-                               + places[currentPlayer]);
-            out.println("The category is " + questions.currentCategory(places[currentPlayer]));
-            questions.askQuestion(places[currentPlayer]);
+            movePlayerToNewLocation(roll);
+            askQuestion();
          } else {
             out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
             isGettingOutOfPenaltyBox = false;
          }
-
       } else {
-
-         places[currentPlayer] = places[currentPlayer] + roll;
-         if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - BOARD_SIZE;
-
-         out.println(players.get(currentPlayer)
-                            + "'s new location is "
-                            + places[currentPlayer]);
-         out.println("The category is " + questions.currentCategory(places[currentPlayer]));
-         questions.askQuestion(places[currentPlayer]);
+         movePlayerToNewLocation(roll);
+         askQuestion();
       }
 
+   }
+
+   private void askQuestion() {
+      out.println("The category is " + questions.currentCategory(places[currentPlayer]));
+      questions.askQuestion(places[currentPlayer]);
+   }
+
+   private void movePlayerToNewLocation(int roll) {
+      places[currentPlayer] = places[currentPlayer] + roll;
+      if (places[currentPlayer] >= BOARD_SIZE) places[currentPlayer] = places[currentPlayer] - BOARD_SIZE;
+
+      out.println(players.get(currentPlayer)
+                         + "'s new location is "
+                         + places[currentPlayer]);
    }
 
    public boolean wasCorrectlyAnswered() {
