@@ -102,16 +102,16 @@ public class GameOld implements IGame {
 
 
   private String currentCategory() {
-    if (places[currentPlayer] == 0) return "Pop";
-    if (places[currentPlayer] == 4) return "Pop";
-    if (places[currentPlayer] == 8) return "Pop";
-    if (places[currentPlayer] == 1) return "Science";
-    if (places[currentPlayer] == 5) return "Science";
-    if (places[currentPlayer] == 9) return "Science";
-    if (places[currentPlayer] == 2) return "Sports";
-    if (places[currentPlayer] == 6) return "Sports";
-    if (places[currentPlayer] == 10) return "Sports";
-    return "Rock";
+    if (places[currentPlayer] == 0) return "Rock";
+    if (places[currentPlayer] == 4) return "Rock";
+    if (places[currentPlayer] == 8) return "Rock";
+    if (places[currentPlayer] == 1) return "Pop";
+    if (places[currentPlayer] == 5) return "Pop";
+    if (places[currentPlayer] == 9) return "Pop";
+    if (places[currentPlayer] == 2) return "Science";
+    if (places[currentPlayer] == 6) return "Science";
+    if (places[currentPlayer] == 10) return "Science";
+    return "Sports";
   }
 
   public boolean wasCorrectlyAnswered() {

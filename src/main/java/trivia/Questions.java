@@ -55,10 +55,10 @@ public class Questions {
 
     Category currentCategory(int place) {
         return switch (place % 4) {
-            case 0 -> POP;
-            case 1 -> SCIENCE;
-            case 2 -> SPORTS;
-            default -> ROCK;
+            case 0 -> ROCK;
+            case 1 -> POP;
+            case 2 -> SCIENCE;
+            default -> SPORTS;
         };
     }
 
