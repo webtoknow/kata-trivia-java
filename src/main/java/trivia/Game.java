@@ -39,22 +39,29 @@ public class Game implements IGame {
       out.println(players.get(currentPlayer) + " is the current player");
       out.println("They have rolled a " + roll);
 
-      if (inPenaltyBox[currentPlayer]) {
-         if (roll % 2 != 0) {
-            isGettingOutOfPenaltyBox = true;
+       if (!inPenaltyBox[currentPlayer]) {
+          movePlayerToNewLocation(roll);
+          askQuestion();
+          return;
+       }
 
-            out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-            movePlayerToNewLocation(roll);
-            askQuestion();
-         } else {
-            out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
-            isGettingOutOfPenaltyBox = false;
-         }
-      } else {
-         movePlayerToNewLocation(roll);
-         askQuestion();
-      }
+       if (roll % 2 != 0) {
+          movePlayerOutOfPenaltyBox(roll);
+       } else {
+          keepPlayerInPenaltyBox();
+       }
+   }
 
+   private void keepPlayerInPenaltyBox() {
+      out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
+      isGettingOutOfPenaltyBox = false;
+   }
+
+   private void movePlayerOutOfPenaltyBox(int roll) {
+      isGettingOutOfPenaltyBox = true;
+      out.println(players.get(currentPlayer) + " is getting out of the penalty box");
+      movePlayerToNewLocation(roll);
+      askQuestion();
    }
 
    private void askQuestion() {
