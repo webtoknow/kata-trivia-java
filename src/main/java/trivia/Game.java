@@ -79,16 +79,16 @@ public class Game implements IGame {
    }
 
    public boolean wasCorrectlyAnswered() {
-      if (inPenaltyBox[currentPlayer]) {
-         if (isGettingOutOfPenaltyBox) {
-            return handleCorrectAnswer();
-         } else {
-            moveToNextPlayer();
-            return true;
-         }
-      } else {
-         return handleCorrectAnswer();
-      }
+       if (!inPenaltyBox[currentPlayer]) {
+          return handleCorrectAnswer();
+       }
+
+       if (isGettingOutOfPenaltyBox) {
+          return handleCorrectAnswer();
+       }
+
+       moveToNextPlayer();
+       return true;
    }
 
    private boolean handleCorrectAnswer() {
