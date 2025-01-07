@@ -13,7 +13,7 @@ public class Game implements IGame {
    final Questions questions = new Questions();
 
    ArrayList<String> players = new ArrayList<>();
-   int[] places = new int[MAX_PLAYERS];
+   int[] locations = new int[MAX_PLAYERS];
    int[] coins = new int[MAX_PLAYERS];
    boolean[] inPenaltyBox = new boolean[MAX_PLAYERS];
 
@@ -22,7 +22,7 @@ public class Game implements IGame {
 
    public boolean add(String playerName) {
       players.add(playerName);
-      places[howManyPlayers()] = 0;
+      locations[howManyPlayers()] = 0;
       coins[howManyPlayers()] = 0;
       inPenaltyBox[howManyPlayers()] = false;
 
@@ -58,17 +58,17 @@ public class Game implements IGame {
    }
 
    private void askQuestion() {
-      out.println("The category is " + questions.currentCategory(places[currentPlayer]));
-      questions.askQuestion(places[currentPlayer]);
+      out.println("The category is " + questions.currentCategory(locations[currentPlayer]));
+      questions.askQuestion(locations[currentPlayer]);
    }
 
    private void movePlayerToNewLocation(int roll) {
-      places[currentPlayer] = places[currentPlayer] + roll;
-      if (places[currentPlayer] >= BOARD_SIZE) places[currentPlayer] = places[currentPlayer] - BOARD_SIZE;
+      locations[currentPlayer] = locations[currentPlayer] + roll;
+      if (locations[currentPlayer] >= BOARD_SIZE) locations[currentPlayer] = locations[currentPlayer] - BOARD_SIZE;
 
       out.println(players.get(currentPlayer)
                          + "'s new location is "
-                         + places[currentPlayer]);
+                         + locations[currentPlayer]);
    }
 
    public boolean wasCorrectlyAnswered() {
